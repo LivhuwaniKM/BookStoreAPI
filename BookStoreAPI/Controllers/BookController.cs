@@ -1,68 +1,66 @@
-﻿using BSDomain;
+﻿using BSCore;
+using BSDomain;
 using BSServices;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel;
 
 namespace BookStore.Controllers
 {
-    [Authorize]
-    [Route("api/[controller]")]
-    [ApiController]
-    [DisplayName("WHAT")]
-    public class BookController(IBookService bookService) : ControllerBase
+    public class BookController(IBookService bookService) : CustomControllerBase
     {
         private readonly IBookService _bookService = bookService;
 
-        [HttpGet("ienumerable")]
-        public IEnumerable<Book> GetAllBooks()
+        [HttpGet("get/all")]
+        public async Task<ActionResult<IList<Book>>> GetAllBooksAsync()
         {
-            var response = _bookService.GetAllBooks();
-            return response;
+            var response = await Task.Run(() => _bookService.GetAllBooks());
+
+            return response != null ? Ok(response) : NotFound("no data found.");
         }
 
-        [HttpGet("actionresult")]
-        public ActionResult<List<Book>> Get()
+        [HttpGet("get/{isbn}")]
+        public async Task<ActionResult<Book>> GetBookByIsbnAsync(string isbn)
         {
-            return _bookService.GetAllBooks();
+            var response = await Task.Run(() => _bookService.GetBookByIsbn(isbn));
+
+            return response != null ? Ok(response) : NotFound("no data found.");
         }
 
-        [HttpGet("{isbn}")]
-        public ActionResult<Book> GetBookByIsbn(string isbn)
+        [HttpGet("get/query")]
+        public async Task<ActionResult> GetBookByIsbnAsync([FromQuery] Book book)
         {
-            var response = _bookService.GetBookByIsbn(isbn);
-            return Ok(response);
-        }
+            var response = await Task.Run(() => _bookService.GetBookByIsbn(book));
 
-        [HttpGet("query")]
-        public ActionResult GetBookByIsbn([FromQuery] Book book)
-        {
-            var response = _bookService.GetBookByIsbn(book);
-            return Ok(response);
+            return response != null ? Ok(response) : NotFound("no data found.");
         }
 
         [HttpPost]
-        public ActionResult<Book> AddBook([FromBody] Book book)
+        public async Task<ActionResult<Book>> AddBookAsync([FromBody] Book book)
         {
-            var response = _bookService.AddBook(book);
-            if (response != null)
-                return Ok(response);
-            else
-                return BadRequest();
+            var response = await Task.Run(() => _bookService.AddBook(book));
+
+            return response != null ? Ok(response) : BadRequest("null object reference.");
         }
 
         [HttpPut("{isbn}")]
-        public ActionResult<Book> UpdateBook(string isbn, [FromBody] Book updatedBook)
+        public async Task<ActionResult<Book>> UpdateBookAsync(string isbn, [FromBody] Book book)
         {
-            var response = _bookService.UpdateBook(updatedBook);
-            return Ok(response);
+            if (string.IsNullOrEmpty(isbn) || book == null)
+                return BadRequest("null object reference.");
+
+            var response = await Task.Run(() => _bookService.UpdateBook(book));
+
+            return response != null ? Ok(response) : BadRequest("null object reference.");
         }
 
         [HttpDelete]
-        public ActionResult DeleteBook(Book book)
+        public async Task<ActionResult> DeleteBookAsync(Book book)
         {
-            var response = _bookService.DeleteBook(book);
-            return Ok(response);
+            if (book == null)
+                return BadRequest("null object reference.");
+
+            var response = await Task.Run(() => _bookService.DeleteBook(book));
+
+            return response != null ? Ok(response) : BadRequest("null object reference.");
         }
     }
 }

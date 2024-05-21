@@ -14,8 +14,6 @@ builder.Services.AddDbContext<BookStoreDbContext>(options =>
     options.UseSqlServer(connectionString, c => c.MigrationsAssembly("BookStore"));
 });
 
-//builder.Services.AddEndpointsApiExplorer();       research
-
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "RESTful API", Version = "v1" });
@@ -25,8 +23,6 @@ builder.Services.AddControllers();
 
 builder.Services.AddSession();
 
-/*builder.Services.AddDistributedMemoryCache();       // research*/
-
 builder.Services.AddMvc();
 
 builder.Services.AddHttpContextAccessor();
@@ -35,11 +31,11 @@ builder.Services.AddScoped<IBookService, BookService>();
 
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 
-builder.Services.AddScoped<JWTAuth>();
+builder.Services.AddScoped<TokenManager>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
-    JWTAuth jwtObject = new();
+    TokenManager jwtObject = new();
     options.TokenValidationParameters = new()
     {
         ValidateAudience = true,
@@ -75,8 +71,6 @@ app.Use(async (context, next) =>
     }
     await next();
 });
-
-// app.UseHttpsRedirection();       research
 
 app.UseSwagger();
 

@@ -4,12 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Controllers
 {
-    [Authorize]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController(JWTAuth jwtObject) : ControllerBase
+    public class AuthController(TokenManager _tokenManager) : CustomControllerBase
     {
-        private readonly JWTAuth jwtObject = jwtObject;
+        private readonly TokenManager _tokenManager = _tokenManager;
 
         [AllowAnonymous]
         [HttpGet("index")]
@@ -17,12 +14,9 @@ namespace BookStore.Controllers
         {
             try
             {
-                var token = await Task.Run(() => jwtObject.GetJwtToken());
+                var token = await Task.Run(() => _tokenManager.GetJwtToken());
 
-                if (!string.IsNullOrEmpty(token))
-                    return Ok();
-                else
-                    return Unauthorized("Unauthorized access!");
+                return token != null ? Ok(token) : BadRequest();
             }
             catch
             {
