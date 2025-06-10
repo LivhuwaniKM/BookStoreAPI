@@ -50,7 +50,7 @@ namespace BookStore.Controllers
 
             var response = await Task.Run(() => _bookService.DeleteBook(id));
 
-            return response != null ? Ok(response) : BadRequest("null object reference.");
+            return response ? Ok("Book deleted successfully.") : BadRequest("null object reference.");
         }
     }
 }
