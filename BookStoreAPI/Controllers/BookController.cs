@@ -5,10 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Controllers
 {
-    public class BookController(IBookService bookService) : CustomControllerBase
+    public class BookController(IBookService _bookService) : BaseController
     {
-        private readonly IBookService _bookService = bookService;
-
         [HttpGet("get/all")]
         public async Task<ActionResult<IList<Book>>> GetAllBooksAsync()
         {

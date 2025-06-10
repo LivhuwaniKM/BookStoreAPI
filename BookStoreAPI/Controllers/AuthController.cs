@@ -4,10 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Controllers
 {
-    public class AuthController(TokenManager _tokenManager) : CustomControllerBase
+    public class AuthController(TokenManager _tokenManager) : BaseController
     {
-        private readonly TokenManager _tokenManager = _tokenManager;
-
         [AllowAnonymous]
         [HttpGet("index")]
         public async Task<ActionResult> Login()
