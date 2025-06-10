@@ -8,6 +8,6 @@ namespace BSServices
         Book GetBookByIsbn(string isbn);
         string AddBook(Book book);
         string UpdateBook(Book book);
-        string DeleteBook(Book book);
+        bool DeleteBook(int id);
     }
 }

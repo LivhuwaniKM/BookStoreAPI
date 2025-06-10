@@ -7,7 +7,7 @@ namespace BookStore.Controllers
     public class AuthController(TokenManager _tokenManager) : BaseController
     {
         [AllowAnonymous]
-        [HttpGet("index")]
+        [HttpGet("login")]
         public async Task<ActionResult> Login()
         {
             try

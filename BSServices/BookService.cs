@@ -12,9 +12,9 @@ namespace BSServices
             return _bookRepository.AddBook(book);
         }
 
-        public string DeleteBook(Book book)
+        public bool DeleteBook(int id)
         {
-            return _bookRepository.DeleteBook(book);
+            return _bookRepository.DeleteBook(id);
         }
 
         public List<Book> GetAllBooks()
