@@ -7,7 +7,7 @@ namespace BookStore.Controllers
 {
     public class BookController(IBookService _bookService) : BaseController
     {
-        [HttpGet("get/all")]
+        [HttpGet("list")]
         public async Task<ActionResult<IList<Book>>> GetAllBooksAsync()
         {
             var response = await Task.Run(() => _bookService.GetAllBooks());
