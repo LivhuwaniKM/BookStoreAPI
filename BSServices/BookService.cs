@@ -27,11 +27,6 @@ namespace BSServices
             return _bookRepository.GetBookByIsbn(isbn);
         }
 
-        public Book GetBookByIsbn(Book book)
-        {
-            return _bookRepository.GetBookByIsbn(book);
-        }
-
         public string UpdateBook(Book book)
         {
             return _bookRepository.UpdateBook(book);

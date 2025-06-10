@@ -17,11 +17,6 @@ namespace BSRepositories
             return _dbContext.Books.First(c => c.ISBN == isbn);
         }
 
-        public Book GetBookByIsbn(Book book)
-        {
-            return _dbContext.Books.First(c => c.ISBN == book.ISBN);
-        }
-
         public string AddBook(Book book)
         {
             _dbContext.Books.Add(book);
@@ -51,17 +46,17 @@ namespace BSRepositories
                 return "error";
         }
 
-        public string DeleteBook(Book book)
+        public bool DeleteBook(int id)
         {
-            var recordToDelete = _dbContext.Books.Single(c => c.ISBN == book.ISBN);
+            var recordToDelete = _dbContext.Books.Single(c => c.Id == id);
 
             _dbContext.Books.Remove(recordToDelete);
             var rowsAffected = _dbContext.SaveChanges();
 
             if (rowsAffected > 0)
-                return "success";
+                return true;
             else
-                return "error";
+                return false;
         }
 
     }

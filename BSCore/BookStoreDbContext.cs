@@ -7,8 +7,6 @@ namespace BSCore
     {
         public virtual DbSet<Book> Books { get; set; }
 
-        public virtual DbSet<Notification> Notifications { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -20,6 +18,7 @@ namespace BSCore
                     Title = "Clean Code",
                     Author = "Robert C. Martin",
                     ISBN = "8797-ADGH-IWNJ",
+                    Edition = "1st Edition",
                     Year = new DateTime(2022, 1, 1)
                 },
                 new Book
@@ -28,6 +27,7 @@ namespace BSCore
                     Title = "Design Patterns: Elements of Reusable Object-Oriented Software",
                     Author = "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides",
                     ISBN = "978-0201633610",
+                    Edition = "2nd Edition",
                     Year = new DateTime(1994, 10, 31)
                 },
                 new Book
@@ -36,6 +36,7 @@ namespace BSCore
                     Title = "The Pragmatic Programmer",
                     Author = "Andrew Hunt, David Thomas",
                     ISBN = "978-0201616224",
+                    Edition = "3rd Edition",
                     Year = new DateTime(1999, 10, 30)
                 },
                 new Book
@@ -44,6 +45,7 @@ namespace BSCore
                     Title = "Python Programming",
                     Author = "Guido van Rossum",
                     ISBN = "672-2638643868",
+                    Edition = "4th Edition",
                     Year = new DateTime(2001, 3, 12)
                 },
                 new Book
@@ -52,6 +54,7 @@ namespace BSCore
                     Title = "Pragmatic Concepts",
                     Author = "Unknown",
                     ISBN = "433-2638643888",
+                    Edition = "5th Edition",
                     Year = new DateTime(1800, 1, 1)
                 },
                 new Book
@@ -60,21 +63,8 @@ namespace BSCore
                     Title = "Advanced Python Programming",
                     Author = "O'Reilly",
                     ISBN = "122-3366553888",
+                    Edition = "6th Edition",
                     Year = new DateTime(1600, 1, 1)
-                });
-
-            modelBuilder.Entity<Notification>().HasData(
-                new Notification
-                {
-                    Id = 1,
-                    Type = "success",
-                    Message = "Request has been processed successfully"
-                },
-                new Notification
-                {
-                    Id = 2,
-                    Type = "error",
-                    Message = "An error has occured while processing request"
                 });
         }
     }

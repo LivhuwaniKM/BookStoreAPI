@@ -23,15 +23,7 @@ namespace BookStore.Controllers
             return response != null ? Ok(response) : NotFound("no data found.");
         }
 
-        [HttpGet("get/query")]
-        public async Task<ActionResult> GetBookByIsbnAsync([FromQuery] Book book)
-        {
-            var response = await Task.Run(() => _bookService.GetBookByIsbn(book));
-
-            return response != null ? Ok(response) : NotFound("no data found.");
-        }
-
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<ActionResult<Book>> AddBookAsync([FromBody] Book book)
         {
             var response = await Task.Run(() => _bookService.AddBook(book));
@@ -39,7 +31,7 @@ namespace BookStore.Controllers
             return response != null ? Ok(response) : BadRequest("null object reference.");
         }
 
-        [HttpPut("{isbn}")]
+        [HttpPut("update/{isbn}")]
         public async Task<ActionResult<Book>> UpdateBookAsync(string isbn, [FromBody] Book book)
         {
             if (string.IsNullOrEmpty(isbn) || book == null)
@@ -50,13 +42,13 @@ namespace BookStore.Controllers
             return response != null ? Ok(response) : BadRequest("null object reference.");
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> DeleteBookAsync(Book book)
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> DeleteBookAsync(int id)
         {
-            if (book == null)
+            if (id <= 0)
                 return BadRequest("null object reference.");
 
-            var response = await Task.Run(() => _bookService.DeleteBook(book));
+            var response = await Task.Run(() => _bookService.DeleteBook(id));
 
             return response != null ? Ok(response) : BadRequest("null object reference.");
         }
