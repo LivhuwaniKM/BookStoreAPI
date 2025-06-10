@@ -34,7 +34,7 @@ namespace BookStore.Controllers
         [HttpPut("update/{isbn}")]
         public async Task<ActionResult<Book>> UpdateBookAsync(string isbn, [FromBody] Book book)
         {
-            if (string.IsNullOrEmpty(isbn) || book == null)
+            if (string.IsNullOrEmpty(isbn) || book == null || isbn != book.ISBN)
                 return BadRequest("null object reference.");
 
             var response = await Task.Run(() => _bookService.UpdateBook(book));
