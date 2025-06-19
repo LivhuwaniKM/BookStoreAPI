@@ -6,7 +6,7 @@ namespace BSServices
     {
         List<Book> GetAllBooks();
         Book GetBookByIsbn(string isbn);
-        string AddBook(Book book);
+        string CreateBook(Book book);
         string UpdateBook(Book book);
         bool DeleteBook(int id);
     }
