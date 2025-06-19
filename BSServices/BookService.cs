@@ -7,7 +7,7 @@ namespace BSServices
     {
         private readonly IBookRepository _bookRepository = bookRepository;
 
-        public string AddBook(Book book)
+        public string CreateBook(Book book)
         {
             return _bookRepository.AddBook(book);
         }
